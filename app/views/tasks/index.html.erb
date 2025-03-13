@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h1 class="text-primary fw-bold text-center mb-4">To-Do List</h1>
+
+  <!-- Task Input Form -->
+  <div class="card shadow-lg p-4 rounded-4 mb-4">
+    <%= form_with(model: Task.new, local: true, class: "w-100") do |form| %>
+      <div class="input-group">
+        <%= form.text_field :title, class: "form-control rounded-start-pill shadow-sm", placeholder: "Enter a new task" %>
+        <%= form.submit "Add", class: "btn btn-primary rounded-end-pill shadow-sm px-4" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Task List Table -->
+  <div class="card shadow-lg p-3 rounded-4">
+    <table class="table table-hover align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th style="width: 60%">Task</th>
+          <th style="width: 20%" class="text-center">Completed</th>
+          <th style="width: 20%" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+        <tr id="task_<%= task.id %>" class="bg-light">
+          <td class="fw-semibold">
+            <%= link_to task.title, task_path(task), data: { turbo_frame: "modal" }, class: "text-decoration-none text-primary fw-bold" %>
+          </td>
+          <td class="text-center">
+            <%= form_with model: task, url: task_path(task), method: :patch, remote: true, class: "d-inline" do |form| %>
+              <%= form.check_box :completed, class: "form-check-input", checked: task.completed, onchange: "this.form.submit();" %>
+            <% end %>
+          </td>
+          <td class="text-center">
+            <%= link_to "✏️", edit_task_path(task), class: "btn btn-warning btn-sm rounded-pill px-3 shadow-sm" %>
+            <%= link_to "🗑", task, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm rounded-pill px-3 shadow-sm" %>
+          </td>
+        </tr>
+      <% end %>
+     </tbody>    
+    </table>
+  </div>
+</div>

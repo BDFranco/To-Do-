@@ -1,0 +1,24 @@
+<div class="container d-flex justify-content-center align-items-center mt-5" style="min-height: 100vh;">
+  <!-- Success Message -->
+  <% if notice.present? %>
+    <div class="alert alert-success text-center w-75 mb-4">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Task Details -->
+  <div class="card shadow-lg p-4 rounded-4 w-75">
+    <div class="card-body">
+      <h2 class="fw-bold text-primary mb-4 text-center"><%= @task.title if @task.present? %></h2>
+
+      <hr class="my-4">
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-3">
+        <%= link_to "✏ Edit Task", edit_task_path(@task), class: "btn btn-warning btn-sm rounded-pill px-4 shadow-sm" %>
+        <%= button_to "🗑 Delete", @task, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm rounded-pill px-4 shadow-sm" %>
+        <%= link_to "⬅ Back to Tasks", tasks_path, class: "btn btn-secondary btn-sm rounded-pill px-4 shadow-sm" %>
+      </div>
+    </div>
+  </div>
+</div>

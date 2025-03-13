@@ -1,0 +1,7 @@
+// Optional: Change row color if completed
+let row = $("tr[data-task-id='<%= @task.id %>']");
+<% if @task.completed %>
+  row.addClass("table-success");
+<% else %>
+  row.removeClass("table-success");
+<% end %>
